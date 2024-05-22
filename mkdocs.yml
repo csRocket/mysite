@@ -1,0 +1,22 @@
+site_name: My Docs 我的网站
+site_url: https://qingjiaotudou.github.io/mysite
+theme:
+  name: material
+  language: zh
+  palette:
+  
+    # Palette toggle for light mode
+    - scheme: default
+      primary: deep purple
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: black
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+
