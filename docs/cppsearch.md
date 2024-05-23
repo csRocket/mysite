@@ -1,6 +1,452 @@
 # C++搜索引擎项目
 
-## String的实现
+## 1、实现一个自定义的String类，保证main函数对正确执行
+
+```c++
+class String
+{
+public:
+	String();
+	String(const char *pstr);
+	String(const String & rhs);
+	String & operator=(const String & rhs);
+	~String();
+
+	void print();
+
+private:
+	char * _pstr;
+};
+
+int main(void)
+{
+	String str1;
+	str1.print();
+	
+	String str2 = "Hello,world";
+	String str3("wangdao");
+	
+	str2.print();		
+	str3.print();	
+	
+	String str4 = str3;
+	str4.print();
+	
+	str4 = str2;
+	str4.print();
+	
+	return 0;
+}
+```
+
+## 2、编写一个类，实现简单的栈。栈中有以下操作：
+
+```c++
+元素入栈     void push(int);
+元素出栈     void pop();
+读出栈顶元素 int top();
+判断栈空     bool emty();
+判断栈满     bool full();
+如果栈溢出，程序终止。栈的数据成员由存放
+10个整型数据的数组构成。先后做如下操作：
+创建栈
+将10入栈
+将12入栈
+将14入栈
+读出并输出栈顶元素
+出栈
+读出并输出栈顶元素
+```
+
+
+
+## 3、编写一个类，实现简单的队列。队列中有以下操作：
+
+```c++
+元素入队            void push(int);
+元素出队            void pop();
+读取队头元素         int front();
+读取队尾元素         int back();
+判断队列是否为空     bool emty();
+判断队列是否已满     bool full();
+```
+
+## 5. 统计一篇英文(The_Holy_Bible.txt)文章中出现的单词和词频
+
+```c++
+输入：某篇文章的绝对路径
+输出：词典（词典中的内容为每一行都是一个“单词 词频”）
+
+词典的存储格式如下
+-----------------
+|   a 66          |
+|   abandon 77    |
+|   public 88     |
+|    ......	      |
+|_________________|
+
+struct Record
+{
+	string _word;
+	int _frequency;
+};
+
+class Dictionary
+{
+public:
+	//......
+    void read(const std::string &filename);
+    void store(const std::string &filename);
+private:
+	vector<Record> _dict;
+};
+```
+
+## 6. 封装log4cpp,使用起来比较方便，如下所示
+
+```c++
+输出的日志信息能同时输出到终端和文件
+
+int main(void)
+{
+    cout << "hello,world"<<endl;
+
+    logInfo("Message");	//或者   
+    logError("Message");
+    logWarn("Message");
+    logDebug("Message");
+}
+
+加分项：输出的日志信息中最好能有文件的名字，函数的名字及其所在的行号
+
+//使用单例模式
+class Mylogger
+{
+public:
+    void warn(const char * msg);
+    void error(const char * msg);
+    void debug(const char * msg);
+    void info(const char * msg);
+private:
+    Mylogger();
+    ~Mylogger();
+private:
+    //......
+};
+
+Mylogger * log = Mylogger::getInstance();
+log->warn("hello");
+```
+
+## 7、实现String类的其它运算符的重载
+
+```c++
+class String 
+{
+public:
+	String();
+	String(const char *);
+	String(const String&);
+	~String();
+	String &operator=(const String &);
+	String &operator=(const char *);
+
+	String &operator+=(const String &);
+	String &operator+=(const char *);
+	
+	char &operator[](std::size_t index);
+	const char &operator[](std::size_t index) const;
+	
+	std::size_t size() const;
+	const char* c_str() const;
+	
+	friend bool operator==(const String &, const String &);
+	friend bool operator!=(const String &, const String &);
+	
+	friend bool operator<(const String &, const String &);
+	friend bool operator>(const String &, const String &);
+	friend bool operator<=(const String &, const String &);
+	friend bool operator>=(const String &, const String &);
+	
+	friend std::ostream &operator<<(std::ostream &os, const String &s);
+	friend std::istream &operator>>(std::istream &is, String &s);
+
+private:
+	char * _pstr;
+};
+
+String operator+(const String &, const String &);
+String operator+(const String &, const char *);
+String operator+(const char *, const String &);
+```
+
+## 8. 实现COW的String，让其operator[]能够区分出读写操作
+
+## 9.使用tinyXml2解析RSS文件，并生成一个网页库pagelib.dat
+
+tinyXml2 -- https://github.com/leethomason/tinyxml2
+
+rss      --   https://coolshell.cn/feed
+
+--   http://www.runoob.com/rss/rss-tutorial.html
+
+```c++
+正则表达式 进行过滤
+参考接口:   
+struct RssItem
+{
+    string title;
+    string link;
+    string description;
+    string content;
+};
+
+class RssReader
+{
+public:
+    RssReader();
+    void parseRss();//解析
+    void dump(const string & filename);//输出
+private:
+    vector<RssItem> _rss;
+};   
+
+要求：最后生成一个 pagelib.txt, 其格式:
+```
+
+```c++
+    <doc>
+      <docid>1</docid>
+      <title> ... </title>
+      <link> ...  </link>
+      <content> ... </content>
+    </doc>
+    <doc>
+      ...
+    </doc>
+    <doc>
+      ...
+    </doc>
+```
+
+```c++
+RSS文件解析作业思路：                 
+xml -->  rss --> tinyxml2 --> boost::regex/std::regex
+```
+
+## 10. 词频统计的作业再用map容器去实现一次
+
+体验一下使用vector/map时程序执行的速度++dict[word];
+
+## 11. 文本查询
+
+```c++
+该程序将读取用户指定的任意文本文件【当前目录下的china_daily.txt】，
+然后允许用户从该文件中查找单词。查询的结果是该单词出现的次数，并列
+出每次出现所在的行。如果某单词在同一行中多次出现，程序将只显示该行
+一次。行号按升序显示。
+
+要求：
+a. 它必须允许用户指明要处理的文件名字。
+
+b. 程序将存储该文件的内容，以便输出每个单词所在的原始行。
+vector<string> lines;//O(1) 
+
+c. 它必须将每一行分解为各个单词，并记录每个单词所在的所有行。 
+在输出行号时，应保证以升序输出，并且不重复。 
+
+map<string, set<int> > wordNumbers;
+map<string, int> dict;
+
+d. 对特定单词的查询将返回出现该单词的所有行的行号。
+
+e. 输出某单词所在的行文本时，程序必须能根据给定的行号从输入
+文件中获取相应的行。
+
+示例：
+使用提供的文件内容，然后查找单词 "element"。输出的前几行为:
+---------------------------------------------
+element occurs 125 times.
+(line 62) element with a given key.
+(line 64) second element with the same key.
+(line 153) element |==| operator.
+(line 250) the element type.
+(line 398) corresponding element.
+---------------------------------------------	
+
+程序接口[可选]:
+class TextQuery
+{
+public:
+    //......
+    void readFile(const string filename);
+    //void query(const string & word);//查询和打印耦合在一起了
+    QueryResult query(const string & word);
+private:
+    //......
+    vector<string> _lines;//O(1) 
+    map<string, set<int> > _wordNumbers;
+    map<string, int> _dict;//
+};
+
+void print(ostream & os, const QueryResult &);
+
+//程序测试用例
+int main(int argc, char *argv[])
+{
+    string  queryWord("hello");
+
+    TextQuery tq;
+    tq.readFile("test.dat");
+    tq.query(queryWord);			   
+    return 0;
+} 
+```
+
+## 12. 两个作业：文本查询扩展(必做)与魔兽世界3750(选做)
+
+12、(必做)完成C++ primer(第5版)中的15.9节的文本查询程序扩展
+
+即使不自己实现,最好也要照着书敲一遍代码, 在机器上让程序跑起来.
+
+12.1、(选做)魔兽世界3750: http://bailian.openjudge.cn/practice/3750/
+
+## 13、将day13作业中的编程题第3题（文本查询作业）用智能指针的方式再实现一遍，
+
+可以参考C++ Primer 第5版第12章3小节（12.3）的实现
+
+## 14. 实现一个模板形式的单例类
+
+要求对于任意类型的类经过Singleton的处理之后，都能获取一个单例对象，并且可以传递任意参数
+    
+
+```c++
+class Point;
+class Computer;
+
+Point pt(1, 2);
+Point pt2(3, 4);
+
+Computer com("Mac", 8888);
+
+
+int main(void)
+{
+    Computer * p1 = Singleton<Computer>::getInstance("Xiaomi", 6666);
+    Computer * p2 = Singleton<Computer>::getInstance("Xiaomi", 6666);
+
+    Point　* p3 = Singleton<Point>::getInstance(1, 2);
+    Point　* p4 = Singleton<Point>::getInstance(1, 2);
+
+    Point3D　* p5 = Singleton<Point>::getInstance(1, 2, 3);
+
+    return 0;
+} 
+```
+
+## 15. 实现log4cpp的封装，使其可以像printf一样使用
+
+测试用例如下:
+
+```c++
+void test() {
+    int number = 100;
+    const char * pstr = "hello, log4cpp";
+    LogError("this is an info message. number = %d, str = %s\n", number, pstr);
+}
+```
+
+## 16. Leetcode 20题（见leetcode或word文档）未实现
+
+## 17. Leetcode 127题（见leetcode或word文档）未实现
+
+## 18. 使用模板实现一个堆排序算法   未实现
+
+使用模板的框架如下：
+
+```c++
+template <typename T, typename Compare = std::less<T> >
+class HeapSort
+{
+public:
+    HeapSort(T * arr, int size);        
+    void heapAdjust();
+    void sort();
+private:
+    //...
+};
+```
+
+## 19. 使用模板实现一个快速排序算法 
+
+## 20. Leetcode 146 LURCache的实现（见leetcode或word文档）
+
+## 21.使用unordered_map/map实现单词转换程序。
+
+给定一个string，将它转换为另一个string。程序的输入是两个文件，第一个文件保存的是一些规则，用来转换第二个文件中的文本。每条规则由两部分组成：一个可能出现在输入文件中的单词和一个用来替换它的短语。表达的含义是，每当第一个单词出现在输入中时，我们就将它替换为对应的短语，第二个输入文件包含要转换的文本。（C++ primer 11.3.6）
+
+提示：
+规则文件：map.txt文件，其实就是第一个单词，被后面的一串所替换。
+待转换文本：file.txt文件，该文件中的单词如果出现在map.txt文件的第一个单词的话，就用map.txt的后面一串替代。
+
+结果：最后结果其实就是，将file.txt文件中的并且出现在map.txt中第一个单词转换为map.txt后面的一串。例如：where r u的输出结果就是where are you.   r替换为are，u替换为you
+
+```txt
+//file.txt
+where r u
+y dont u send me a pic
+k thk l8r
+    
+//map.txt
+brb be right back
+k okay?
+y why
+r are
+u you
+pic picture
+thk thanks!
+l8r later 
+```
+
+## 22. 了解std::allocator的用法之后,实现自定义的Vector类
+
+接口形式：
+
+```c++
+template<typename T>
+class Vector
+{
+public:
+    Vector();
+    ~Vector();
+
+    void push_back(const T &); 
+    void pop_back();    
+
+    int size();
+    int capacity();
+private:
+    void reallocate();//重新分配内存,动态扩容要用的
+private:    
+    static std::allocator<T> _alloc;
+
+    T * _start;      //指向数组中的第一个元素
+    T * _finish; //指向最后一个实际元素之后的那个元素
+    T * _end_of_storage;        //指向数组本身之后的位置
+};
+```
+
+```txt
+Vector模型
+______________________________
+|_|_|_|_|_|____________________|
+↑         ↑                    ↑
+_start   _finish            _end_of_storage
+```
+
+## 编程题答案
+
+### 1、String的实现
 
 ```c++
 /* String.cc */
@@ -130,7 +576,114 @@ int main(void)
 }
 ```
 
-## 词频统计的Vector实现
+### 2、栈的实现
+
+```c++
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+class Stack
+{
+public:
+    Stack(int size = 10)
+    : _size(size)
+    , _top(-1)
+    , _data(new int[_size]())
+    {
+        cout << "Stack(int  = 10)" << endl;
+    }
+
+    ~Stack()
+    {
+        cout << "~Satck()" << endl;
+        if(_data)
+        {
+            delete [] _data;
+            _data = nullptr;
+        }
+    }
+
+    bool full() const
+    {
+#if 0
+        if(_top == _size - 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+#endif
+
+        return (_top == _size - 1);
+    }
+
+    bool empty() const
+    {
+        return (-1 == _top);
+        /* return ( _top = -1); */
+    }
+
+    void push(const int &value)
+    {
+        if(!full())
+        {
+            _data[++_top] = value;
+        }
+        else
+        {
+            cout << "The stack is full" << endl;
+            return;
+        }
+    }
+    void pop()
+    {
+        if(!empty())
+        {
+            --_top;
+        }
+        else
+        {
+            cout << "The stack is empty" << endl;
+            return;
+        }
+    }
+    int top() const
+    {
+        return _data[_top];
+    }
+private:
+    int _size;
+    int _top;
+    int *_data;
+};
+
+int main(int argc, char **argv)
+{
+    Stack st(12);
+    cout << "栈是不是空的？" << st.empty() << endl;
+    st.push(1);
+    cout << "栈是不是满的？" << st.full() << endl;
+
+    for(int idx = 2; idx != 15; ++idx)
+    {
+        st.push(idx);
+    }
+
+    while(!st.empty())
+    {
+        cout << st.top() << endl;
+        st.pop();
+    }
+    cout << "栈是不是空的？" << st.empty() << endl;
+    return 0;
+}
+```
+
+### 5、词频统计vector
 
 ```c++
 /* dictVector.cc */
@@ -267,7 +820,7 @@ int main(int argc, char **argv)
 }
 ```
 
-## String的运算符重载
+### 7、String运算符重载
 
 ```c++
 /* stringOperator.cc */
@@ -552,9 +1105,9 @@ int main(int argc, char **argv)
 }
 ```
 
-## 词频统计Map实现及其与Vector对比
+### 10、词频统计map与vector
 
-### Map实现
+map：
 
 ```c++
 #include <time.h>
@@ -657,7 +1210,7 @@ int main(void)
 }
 ```
 
-### Vector实现
+vector：
 
 ```c++
 #include <time.h>
@@ -815,74 +1368,7 @@ int main(int argc, char **argv)
 }
 ```
 
-## 文本查询
-
-### 题目
-
-```c++
-该程序将读取用户指定的任意文本文件【当前目录下的china_daily.txt】，
-然后允许用户从该文件中查找单词。查询的结果是该单词出现的次数，并列
-出每次出现所在的行。如果某单词在同一行中多次出现，程序将只显示该行
-一次。行号按升序显示。
-
-要求：
-a. 它必须允许用户指明要处理的文件名字。
-
-b. 程序将存储该文件的内容，以便输出每个单词所在的原始行。
-vector<string> lines;//O(1) 
-
-c. 它必须将每一行分解为各个单词，并记录每个单词所在的所有行。 
-在输出行号时，应保证以升序输出，并且不重复。 
-
-map<string, set<int> > wordNumbers;
-map<string, int> dict;
-
-d. 对特定单词的查询将返回出现该单词的所有行的行号。
-
-e. 输出某单词所在的行文本时，程序必须能根据给定的行号从输入
-文件中获取相应的行。
-
-示例：
-使用提供的文件内容，然后查找单词 "element"。输出的前几行为:
----------------------------------------------
-element occurs 125 times.
-(line 62) element with a given key.
-(line 64) second element with the same key.
-(line 153) element |==| operator.
-(line 250) the element type.
-(line 398) corresponding element.
----------------------------------------------	
-
-程序接口[可选]:
-class TextQuery
-{
-public:
-    //......
-    void readFile(const string filename);
-    //void query(const string & word);//查询和打印耦合在一起了
-    QueryResult query(const string & word);
-private:
-    //......
-    vector<string> _lines;//O(1) 
-    map<string, set<int> > _wordNumbers;
-    map<string, int> _dict;//
-};
-
-void print(ostream & os, const QueryResult &);
-
-//程序测试用例
-int main(int argc, char *argv[])
-{
-    string  queryWord("hello");
-
-    TextQuery tq;
-    tq.readFile("test.dat");
-    tq.query(queryWord);			   
-    return 0;
-} 
-```
-
-### 答案
+### 11、文本查询
 
 ```c++
 /* TextQuery.cc */
@@ -1005,24 +1491,6 @@ int main(int argc, char **argv)
     return 0;
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
