@@ -2,7 +2,7 @@
 
 弱者任思绪控制行为，强者让行为控制思绪。
 
-## C++程序设计
+## C/C++程序设计
 
 好记性不如烂笔头
 
@@ -29,6 +29,18 @@ LeetCode100（C++）、LeetCode数据库
 《C++ Primer（第5版）》及其提及的4本关于C++的书
 
 项目实践：搜索引擎项目
+
+五、补充
+
+Python：
+
+pku-mooc-Python程序设计、《Python从入门到实践（第3版）》
+
+机器学习：github-fengdu78
+
+Java：
+
+pku-mooc-Java程序设计
 
 ## 计算机专业基础
 
