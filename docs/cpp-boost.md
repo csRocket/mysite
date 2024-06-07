@@ -267,7 +267,7 @@ int eventfd(unsigned int initval, int flags);
 
 ![image-20240527165450688](C++提高.assets/image-20240527165450688.png)
 
-## 三、Reactor各版本总结
+## 七、Reactor各版本总结
 
 1、执行send与read的线程，是执行IO操作，将其成为IO线程。
 
@@ -277,7 +277,7 @@ int eventfd(unsigned int initval, int flags);
 
 
 
-## 四、timerfd的使用
+## 八、timerfd的使用
 
 ### 1、特征
 
@@ -329,4 +329,6 @@ struct itimerspec
 ### 3、timerfd的封装
 
 ![image-20240527180122671](C++提高.assets/image-20240527180122671.png)
+
+
 
