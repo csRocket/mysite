@@ -1,8 +1,8 @@
-# 欢迎来到MkDocs
+# 首页
 
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
-## Commands
+## 命令
 
 * `mkdocs new [dir-name]` - Create a new project.
 * `mkdocs serve` - Start the live-reloading docs server.
@@ -16,7 +16,5 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
         index.md  # The documentation homepage.
         ...       # Other markdown pages, images and other files.
 
-## 成长计划
 
-开始
 
