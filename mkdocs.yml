@@ -1,5 +1,5 @@
-site_name: My Docs 我的网站
-site_url: https://qingjiaotudou.github.io/mysite
+site_name: 我的网站
+site_url: https://basebicycle.github.io/mysite
 theme:
   name: material
   language: zh
